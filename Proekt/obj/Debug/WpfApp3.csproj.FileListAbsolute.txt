@@ -1,0 +1,15 @@
+D:\С# form\22.11.07\Zadanie\WpfApp3\bin\Debug\WpfApp3.exe.config
+D:\С# form\22.11.07\Zadanie\WpfApp3\bin\Debug\WpfApp3.exe
+D:\С# form\22.11.07\Zadanie\WpfApp3\bin\Debug\WpfApp3.pdb
+D:\С# form\22.11.07\Zadanie\WpfApp3\obj\Debug\WpfApp3.csprojAssemblyReference.cache
+D:\С# form\22.11.07\Zadanie\WpfApp3\obj\Debug\MainWindow.g.cs
+D:\С# form\22.11.07\Zadanie\WpfApp3\obj\Debug\App.g.cs
+D:\С# form\22.11.07\Zadanie\WpfApp3\obj\Debug\WpfApp3_MarkupCompile.cache
+D:\С# form\22.11.07\Zadanie\WpfApp3\obj\Debug\WpfApp3_MarkupCompile.lref
+D:\С# form\22.11.07\Zadanie\WpfApp3\obj\Debug\MainWindow.baml
+D:\С# form\22.11.07\Zadanie\WpfApp3\obj\Debug\WpfApp3.g.resources
+D:\С# form\22.11.07\Zadanie\WpfApp3\obj\Debug\WpfApp3.Properties.Resources.resources
+D:\С# form\22.11.07\Zadanie\WpfApp3\obj\Debug\WpfApp3.csproj.GenerateResource.cache
+D:\С# form\22.11.07\Zadanie\WpfApp3\obj\Debug\WpfApp3.csproj.CoreCompileInputs.cache
+D:\С# form\22.11.07\Zadanie\WpfApp3\obj\Debug\WpfApp3.exe
+D:\С# form\22.11.07\Zadanie\WpfApp3\obj\Debug\WpfApp3.pdb
