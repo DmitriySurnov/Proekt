@@ -1,22 +1,40 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace WpfApp3
 {
+    public static class Info
+    {
+        public static string Path = "";
+        public static string NameFile = "worker.txt";
+        public static bool IsNullFile()
+        {
+            if (File.Exists(Path + NameFile))
+            {
+                string[] file = File.ReadAllLines(Path + NameFile);
+                if (file.Length != 0)
+                    return false;
+            }
+            return true;
+        }
+    }
+
     public class ImageFigure
     {
         public Image WhiteFigure(int cellSize)
         {
-            return Figure(cellSize, @"D:\С# form\22.11.07\Zadanie\WpfApp3\Sprites\w.png");
+            return Figure(cellSize, Info.Path + @"Sprites\w.png");
         }
 
-        private Image Figure(int cellSize,string uri)
+        public Image WhiteFigureDama(int cellSize)
+        {
+            return Figure(cellSize, Info.Path + @"Sprites\wD.png");
+        }
+
+        private Image Figure(int cellSize, string uri)
         {
             Image ImageFigure = new Image();
             ImageFigure.Width = cellSize - 10;
@@ -33,7 +51,12 @@ namespace WpfApp3
 
         public Image BlackFigure(int cellSize)
         {
-            return Figure(cellSize, @"D:\С# form\22.11.07\Zadanie\WpfApp3\Sprites\b.png");
+            return Figure(cellSize, Info.Path + @"Sprites\b.png");
+        }
+
+        public Image BlackFigureDama(int cellSize)
+        {
+            return Figure(cellSize, Info.Path + @"Sprites\bD.png");
         }
     }
 
@@ -43,15 +66,17 @@ namespace WpfApp3
         private const int cellSize = 50;
         private ImageFigure Figure = new ImageFigure();
         public Button button;
+        public bool Dama;
         public int Index;
         public int Row;
         public int Column;
 
-        public figure(int row, int column, int index)
+        public figure(int row, int column, int index, bool dama = false)
         {
             Index = index;
             Row = row;
             Column = column;
+            Dama = dama;
             button = new Button();
             Background();
             Image();
@@ -60,9 +85,19 @@ namespace WpfApp3
         public void Image()
         {
             if (Index == 1)
-                button.Content = Figure.WhiteFigure(cellSize);
+            {
+                if (Dama)
+                    button.Content = Figure.WhiteFigureDama(cellSize);
+                else
+                    button.Content = Figure.WhiteFigure(cellSize);
+            }
             else if (Index == 2)
-                button.Content = Figure.BlackFigure(cellSize);
+            {
+                if (Dama)
+                    button.Content = Figure.BlackFigureDama(cellSize);
+                else
+                    button.Content = Figure.BlackFigure(cellSize);
+            }
             else
                 button.Content = "";
         }
@@ -83,6 +118,11 @@ namespace WpfApp3
                 else
                     button.Background = Brushes.Black;
             }
+        }
+
+        public override string ToString()
+        {
+            return $"{Row} {Column} {Index} {Dama}";
         }
     }
 }

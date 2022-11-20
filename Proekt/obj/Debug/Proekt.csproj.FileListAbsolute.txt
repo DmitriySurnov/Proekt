@@ -13,3 +13,7 @@ D:\С# form\git_dz-1\Proekt\Proekt\obj\Debug\Proekt.csproj.GenerateResource.cach
 D:\С# form\git_dz-1\Proekt\Proekt\obj\Debug\Proekt.csproj.CoreCompileInputs.cache
 D:\С# form\git_dz-1\Proekt\Proekt\obj\Debug\WpfApp3.exe
 D:\С# form\git_dz-1\Proekt\Proekt\obj\Debug\WpfApp3.pdb
+D:\С# form\git_dz-1\Proekt\Proekt\obj\Debug\Message.g.cs
+D:\С# form\git_dz-1\Proekt\Proekt\obj\Debug\Message.baml
+D:\С# form\git_dz-1\Proekt\Proekt\obj\Debug\Games.g.cs
+D:\С# form\git_dz-1\Proekt\Proekt\obj\Debug\Games.baml
