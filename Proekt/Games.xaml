@@ -12,14 +12,13 @@
                 <MenuItem x:Name="PM_1" Header="Файл">
                     <MenuItem x:Name="PM_1_1"  Header="Новая игра" Click="PM_1_1_Click"/>
                     <MenuItem x:Name="PM_1_2"  Header="Сохранить игру" Click="PM_1_2_Click"/>
-                    <MenuItem x:Name="PM_1_5"  Header="Загрузить игру" Click="PM_1_3_Click"/>
-                    <!--<MenuItem x:Name="PM_1_3" Header="_Язык">
+                    <MenuItem x:Name="PM_1_5"  Header="Загрузить игру" Click="PM_1_5_Click"/>
+                    <MenuItem x:Name="PM_1_3" Header="_Язык">
                         <MenuItem x:Name="PM_1_3_1"  Header="_Русский" Click="PM_1_3_Click"/>
                         <MenuItem x:Name="PM_1_3_2"  Header="_Английский" Click="PM_1_3_Click"/>
                         <MenuItem x:Name="PM_1_3_3"  Header="_Испанский" Click="PM_1_3_Click"/>
-                        <MenuItem x:Name="PM_1_3_4"  Header="_Итольянский" Click="PM_1_3_Click"/>
-                        <MenuItem x:Name="PM_1_3_5"  Header="_Немецский" Click="PM_1_3_Click"/>
-                    </MenuItem>-->
+                        <MenuItem x:Name="PM_1_3_4"  Header="_Французский" Click="PM_1_3_Click"/>
+                    </MenuItem>
                     <Separator/>
                     <MenuItem x:Name="PM_1_4"  Header="Выход" Click="PM_1_4_Click"/>
                 </MenuItem>

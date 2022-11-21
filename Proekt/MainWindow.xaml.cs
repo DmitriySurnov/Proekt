@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
 
 
 namespace WpfApp3
@@ -15,12 +12,17 @@ namespace WpfApp3
         public MainWindow()
         {
             InitializeComponent();
-            this.Title = "Шашки";
+            Title = WinLeng.Title;
             DirectoryInfo di1;
             di1 = new DirectoryInfo("./");
             Info.Path = di1.FullName;
             if (Info.IsNullFile())
                 ZagryzGames.IsEnabled = false;
+            exit.Content = WinLeng.exit;
+            NewGames.Content = WinLeng.NewGames;
+            ZagryzGames.Content = WinLeng.ZagryzGames;
+            zogolovok.Text = WinLeng.zogolovok;
+
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)

@@ -13,17 +13,17 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <TextBox Grid.Row="0" x:Name="pozdr" FontSize="50"  Text="" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
-        <TextBox Grid.Row="1" x:Name="textBox" FontSize="50"  Text="Хотите начать игру заново?" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+        <TextBox Grid.Row="1" x:Name="textBox" FontSize="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0" Margin="10">
-                <Button IsDefault="True" x:Name="Yes" Content="Да" FontSize="50" Click="Yes_Click"></Button>
+                <Button IsDefault="True" x:Name="Yes" FontSize="50" Click="Yes_Click"></Button>
             </Grid>
             <Grid Grid.Column="1" Margin="10">
-                <Button IsCancel="True" x:Name="No" Content="нет" FontSize="50"></Button>
+                <Button IsCancel="True" x:Name="No" FontSize="50"></Button>
             </Grid>
         </Grid>
     </Grid>

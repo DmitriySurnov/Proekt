@@ -27,23 +27,27 @@ namespace WpfApp3
         public Message(int i)
         {
             InitializeComponent();
+            Title = MessageLeng.Title;
+            textBox.Text = MessageLeng.textBox;
+            Yes.Content = MessageLeng.Yes;
+            No.Content = MessageLeng.No;
             if (i == 0)
-                pozdr.Text = "поздравляем победитель игрок 1";
+                pozdr.Text = MessageLeng.Text_1;
             else if (i == 1)
-                pozdr.Text = "поздравляем победитель игрок 2";
+                pozdr.Text = MessageLeng.Text_2;
             else if (i == 2)
-                pozdr.Text = "поздравляем ничья";
+                pozdr.Text = MessageLeng.Text_3;
             else if (i == 4)
-                textBox.Text = "Согласны на ничью? ";
+                textBox.Text = MessageLeng.Text_4;
             else if (i == 5)
             {
-                textBox.Text = "Вы уверины что хотите начать новую игру? ";
+                textBox.Text = MessageLeng.Text_5;
                 Width = 1065;
                 MinWidth = 1065;
             }
             else if (i == 6)
             {
-                textBox.Text = "Вы уверины что хотите загрузить игру? ";
+                textBox.Text = MessageLeng.Text_6;
                 Width = 1065;
                 MinWidth = 1065;
             }

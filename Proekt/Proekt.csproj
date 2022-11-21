@@ -55,6 +55,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="GamesLond.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GamesLond.resx</DependentUpon>
+    </Compile>
+    <Compile Include="MessageLeng.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MessageLeng.resx</DependentUpon>
+    </Compile>
+    <Compile Include="WinLeng.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WinLeng.resx</DependentUpon>
+    </Compile>
     <Page Include="Games.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -97,9 +112,30 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="GamesLond.en.resx" />
+    <EmbeddedResource Include="GamesLond.es.resx" />
+    <EmbeddedResource Include="GamesLond.fr.resx" />
+    <EmbeddedResource Include="GamesLond.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>GamesLond.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MessageLeng.en.resx" />
+    <EmbeddedResource Include="MessageLeng.es.resx" />
+    <EmbeddedResource Include="MessageLeng.fr.resx" />
+    <EmbeddedResource Include="MessageLeng.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>MessageLeng.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinLeng.en.resx" />
+    <EmbeddedResource Include="WinLeng.es.resx" />
+    <EmbeddedResource Include="WinLeng.fr.resx" />
+    <EmbeddedResource Include="WinLeng.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>WinLeng.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

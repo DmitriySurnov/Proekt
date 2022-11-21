@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -25,19 +27,45 @@ namespace WpfApp3
         List<figure> Meal_D2 = null;//
         List<figure> Meal_D3 = null;//
         List<figure> Meal_D4 = null;//
+        private new readonly Dictionary<string, MenuItem> Language = new Dictionary<string, MenuItem>();
 
         public Games()
         {
             InitializeComponent();
-            this.Title = "Шашки ходит игрок 1";
+            this.Title = GamesLond.Title_1;
+            Language.Add("en", PM_1_3_2);
+            Language.Add("ru", PM_1_3_1);
+            Language.Add("es", PM_1_3_3);
+            Language.Add("fr", PM_1_3_4);
+            Language_Changed(Thread.CurrentThread.CurrentUICulture.Parent.ToString());
             if (Info.IsNullFile())
                 PM_1_5.IsEnabled = false;
             CreateMap();
         }
 
+        private void Language_Changed(string s)
+        {
+            if (hod == 1)
+                this.Title = GamesLond.Title_1;
+            else
+                this.Title = GamesLond.Title_2;
+            PM_1.Header = GamesLond.PM_1;
+            PM_1_1.Header = GamesLond.PM_1_1;
+            PM_1_2.Header = GamesLond.PM_1_2;
+            PM_1_3.Header = GamesLond.PM_1_3;
+            PM_1_5.Header = GamesLond.PM_1_5;
+            PM_1_3_1.Header = GamesLond.PM_1_3_1;
+            PM_1_3_2.Header = GamesLond.PM_1_3_2;
+            PM_1_3_3.Header = GamesLond.PM_1_3_3;
+            PM_1_3_4.Header = GamesLond.PM_1_3_4;
+            foreach (var el in Language)
+                el.Value.IsEnabled = (el.Key != s) ? true : false;
+        }
+
         public Games(int x)
         {
             InitializeComponent();
+            Language_Changed(Thread.CurrentThread.CurrentUICulture.Parent.ToString());
             zagryzka();
         }
 
@@ -83,11 +111,12 @@ namespace WpfApp3
                     }
             return isFood;
         }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if (b is null)
+            {
                 foreach (var i in simpleSteps)
-                {
                     if ((Button)sender == i.button && i.Index == hod)
                     {
                         i.button.Background = Brushes.Red;
@@ -95,7 +124,7 @@ namespace WpfApp3
                         Food_5(i.Row, i.Column, i.Dama);
                         break;
                     }
-                }
+            }
             else if (b.button == (Button)sender)
             {
                 otmena();
@@ -103,7 +132,7 @@ namespace WpfApp3
                     Perevod_hoda();
             }
             else if (((Button)sender).Background == Brushes.Green)
-            {// поправить момент еда пешки с послущем приврощением в дамку и провера хода
+            {
                 b.Index = 0;
                 b.Image();
                 foreach (var i in lf)
@@ -111,170 +140,19 @@ namespace WpfApp3
                     {
                         i.Background();
                         i.Index = hod;
+                        bool isFood = false;
+                        if (!(Meal is null))
+                            isFood = Food_7(i);
                         i.Dama = b.Dama;
                         b.Dama = false;
                         if (!i.Dama && ((hod == 1 && i.Column == 7) || (hod == 2 && i.Column == 0)))
                             i.Dama = true;
                         i.Image();
-                        if (!(Meal is null))
+                        if (isFood)
                         {
-                            if (i.Dama)
-                            {
-                                bool isFood = false;
-                                if (!(Meal_D1 is null))
-                                {
-                                    if (b.Row < i.Row && b.Column > i.Column)
-                                        isFood = Food_6(Meal_D1, b.Row, i.Row);
-                                }
-                                if (!(Meal_D2 is null))
-                                {
-                                    if (b.Row > i.Row && b.Column > i.Column)
-                                        isFood = Food_6(Meal_D2, i.Row, b.Row);
-                                }
-                                if (!(Meal_D3 is null))
-                                {
-                                    if (b.Row > i.Row && b.Column < i.Column)
-                                        isFood = Food_6(Meal_D3, i.Row, b.Row);
-                                }
-                                if (!(Meal_D4 is null))
-                                {
-                                    if (b.Row < i.Row && b.Column < i.Column)
-                                        isFood = Food_6(Meal_D4, b.Row, i.Row);
-                                }
-                                if (isFood)
-                                {
-                                    otmena();
-                                    Food_5(i.Row, i.Column, i.Dama);
-                                    if (!(Meal is null))
-                                    {
-                                        b = i;
-                                        povtor = true;
-                                        b.button.Background = Brushes.Red;
-                                        if (Meal_D1 is null)
-                                        {
-                                            for (var m = 0; m < lf.Count;)
-                                                if (b.Row < lf[m].Row && b.Column > lf[m].Column)
-                                                {
-                                                    lf[m].Background();
-                                                    lf.RemoveAt(m);
-                                                }
-                                                else m++;
-                                        }
-                                        else
-                                        {
-                                            for (var m = 0; m < lf.Count;)
-                                                if (b.Row < lf[m].Row && b.Column > lf[m].Column)
-                                                    if (Meal_D1[0].Row > lf[m].Row && Meal_D1[0].Column < lf[m].Column)
-                                                    {
-                                                        lf[m].Background();
-                                                        lf.RemoveAt(m);
-                                                    }
-                                                    else
-                                                        m++;
-                                                else
-                                                    break;
-                                        }
-                                        if (Meal_D2 is null)
-                                        {
-                                            for (var m = 0; m < lf.Count;)
-                                                if (b.Row > lf[m].Row && b.Column > lf[m].Column)
-                                                {
-                                                    lf[m].Background();
-                                                    lf.RemoveAt(m);
-                                                }
-                                                else m++;
-                                        }
-                                        else
-                                        {
-                                            for (var m = 0; m < lf.Count;)
-                                                if (b.Row > lf[m].Row && b.Column > lf[m].Column)
-                                                    if (Meal_D2[0].Row < lf[m].Row && Meal_D2[0].Column < lf[m].Column)
-                                                    {
-                                                        lf[m].Background();
-                                                        lf.RemoveAt(m);
-                                                    }
-                                                    else
-                                                        m++;
-                                                else
-                                                    break;
-                                        }
-                                        if (Meal_D3 is null)
-                                        {
-                                            for (var m = 0; m < lf.Count;)
-                                                if (b.Row > lf[m].Row && b.Column < lf[m].Column)
-                                                {
-                                                    lf[m].Background();
-                                                    lf.RemoveAt(m);
-                                                }
-                                                else m++;
-                                        }
-                                        else
-                                        {
-                                            for (var m = 0; m < lf.Count;)
-                                                if (b.Row > lf[m].Row && b.Column < lf[m].Column)
-                                                    if (Meal_D3[0].Row < lf[m].Row && Meal_D3[0].Column > lf[m].Column)
-                                                    {
-                                                        lf[m].Background();
-                                                        lf.RemoveAt(m);
-                                                    }
-                                                    else
-                                                        m++;
-                                                else
-                                                    break;
-                                        }
-                                        if (Meal_D4 is null)
-                                        {
-                                            for (var m = 0; m < lf.Count;)
-                                                if (b.Row < lf[m].Row && b.Column < lf[m].Column)
-                                                {
-                                                    lf[m].Background();
-                                                    lf.RemoveAt(m);
-                                                }
-                                                else m++;
-                                        }
-                                        else
-                                        {
-                                            for (var m = 0; m < lf.Count;)
-                                                if (b.Row < lf[m].Row && b.Column < lf[m].Column)
-                                                    if (Meal_D4[0].Row > lf[m].Row && Meal_D4[0].Column > lf[m].Column)
-                                                    {
-                                                        lf[m].Background();
-                                                        lf.RemoveAt(m);
-                                                    }
-                                                    else
-                                                        m++;
-                                                else
-                                                    break;
-                                        }
-                                        return;
-                                    }
-
-                                }
-                            }
-                            else
-                            {
-                                foreach (var m in Meal)
-                                    if ((i.Row + 1 == m.Row || i.Row - 1 == m.Row) &&
-                                        (i.Column + 1 == m.Column || i.Column - 1 == m.Column))
-                                    {
-                                        izmenenie(m);
-                                        otmena();
-                                        Food_5(i.Row, i.Column, i.Dama);
-                                        if (!(Meal is null))
-                                        {
-                                            povtor = true;
-                                            b = i;
-                                            b.button.Background = Brushes.Red;
-                                            foreach (var s in lf)
-                                                if ((i.Row + 1 == s.Row || i.Row - 1 == s.Row) &&
-                                                (i.Column + 1 == s.Column || i.Column - 1 == s.Column))
-                                                    s.Background();
-                                            return;
-                                        }
-                                        break;
-                                    }
-
-                            }
+                            Food_8(i);
+                            if (!(Meal is null))
+                                return;
                         }
                         break;
                     }
@@ -282,6 +160,166 @@ namespace WpfApp3
                 Perevod_hoda();
             }
         }
+
+        private bool Food_7(figure i)
+        {
+            bool isFood = false;
+            if (i.Dama)
+            {
+                if (!(Meal_D1 is null))
+                {
+                    if (b.Row < i.Row && b.Column > i.Column)
+                        isFood = Food_6(Meal_D1, b.Row, i.Row);
+                }
+                if (!(Meal_D2 is null))
+                {
+                    if (b.Row > i.Row && b.Column > i.Column)
+                        isFood = Food_6(Meal_D2, i.Row, b.Row);
+                }
+                if (!(Meal_D3 is null))
+                {
+                    if (b.Row > i.Row && b.Column < i.Column)
+                        isFood = Food_6(Meal_D3, i.Row, b.Row);
+                }
+                if (!(Meal_D4 is null))
+                {
+                    if (b.Row < i.Row && b.Column < i.Column)
+                        isFood = Food_6(Meal_D4, b.Row, i.Row);
+                }
+                return isFood;
+            }
+            else
+            {
+                foreach (var m in Meal)
+                    if ((i.Row + 1 == m.Row || i.Row - 1 == m.Row) &&
+                        (i.Column + 1 == m.Column || i.Column - 1 == m.Column))
+                    {
+                        izmenenie(m);
+                        return true;
+                    }
+
+            }
+            return false;
+        }
+
+        private void Food_8(figure i)
+        {
+            otmena();
+            Food_5(i.Row, i.Column, i.Dama);
+            if (!(Meal is null))
+            {
+                povtor = true;
+                b = i;
+                b.button.Background = Brushes.Red;
+                if (i.Dama)
+                {
+                    if (Meal_D1 is null)
+                    {
+                        for (var m = 0; m < lf.Count;)
+                            if (b.Row < lf[m].Row && b.Column > lf[m].Column)
+                            {
+                                lf[m].Background();
+                                lf.RemoveAt(m);
+                            }
+                            else m++;
+                    }
+                    else
+                    {
+                        for (var m = 0; m < lf.Count;)
+                            if (b.Row < lf[m].Row && b.Column > lf[m].Column)
+                                if (Meal_D1[0].Row > lf[m].Row && Meal_D1[0].Column < lf[m].Column)
+                                {
+                                    lf[m].Background();
+                                    lf.RemoveAt(m);
+                                }
+                                else
+                                    m++;
+                            else
+                                break;
+                    }
+                    if (Meal_D2 is null)
+                    {
+                        for (var m = 0; m < lf.Count;)
+                            if (b.Row > lf[m].Row && b.Column > lf[m].Column)
+                            {
+                                lf[m].Background();
+                                lf.RemoveAt(m);
+                            }
+                            else m++;
+                    }
+                    else
+                    {
+                        for (var m = 0; m < lf.Count;)
+                            if (b.Row > lf[m].Row && b.Column > lf[m].Column)
+                                if (Meal_D2[0].Row < lf[m].Row && Meal_D2[0].Column < lf[m].Column)
+                                {
+                                    lf[m].Background();
+                                    lf.RemoveAt(m);
+                                }
+                                else
+                                    m++;
+                            else
+                                break;
+                    }
+                    if (Meal_D3 is null)
+                    {
+                        for (var m = 0; m < lf.Count;)
+                            if (b.Row > lf[m].Row && b.Column < lf[m].Column)
+                            {
+                                lf[m].Background();
+                                lf.RemoveAt(m);
+                            }
+                            else m++;
+                    }
+                    else
+                    {
+                        for (var m = 0; m < lf.Count;)
+                            if (b.Row > lf[m].Row && b.Column < lf[m].Column)
+                                if (Meal_D3[0].Row < lf[m].Row && Meal_D3[0].Column > lf[m].Column)
+                                {
+                                    lf[m].Background();
+                                    lf.RemoveAt(m);
+                                }
+                                else
+                                    m++;
+                            else
+                                break;
+                    }
+                    if (Meal_D4 is null)
+                    {
+                        for (var m = 0; m < lf.Count;)
+                            if (b.Row < lf[m].Row && b.Column < lf[m].Column)
+                            {
+                                lf[m].Background();
+                                lf.RemoveAt(m);
+                            }
+                            else m++;
+                    }
+                    else
+                    {
+                        for (var m = 0; m < lf.Count;)
+                            if (b.Row < lf[m].Row && b.Column < lf[m].Column)
+                                if (Meal_D4[0].Row > lf[m].Row && Meal_D4[0].Column > lf[m].Column)
+                                {
+                                    lf[m].Background();
+                                    lf.RemoveAt(m);
+                                }
+                                else
+                                    m++;
+                            else
+                                break;
+                    }
+                }
+                else
+                {
+                    foreach (var s in lf)
+                        if ((i.Row + 1 == s.Row || i.Row - 1 == s.Row) &&
+                        (i.Column + 1 == s.Column || i.Column - 1 == s.Column))
+                            s.Background();
+                }
+            }
+        }
+
         private void izmenenie(figure m)
         {
             if (m.Index == 1)
@@ -297,25 +335,19 @@ namespace WpfApp3
             if (hod == 1)
             {
                 hod = 2;
-                Title = "Шашки ходит игрок 2";
+                Title = GamesLond.Title_2;
             }
             else
             {
                 hod = 1;
-                Title = "Шашки ходит игрок 1";
+                Title = GamesLond.Title_1;
             }
             povtor = false;
             int i = -1;
             if (countBlackFigure == 0)
-            {
-                Title = "поздравляем победитель игрок 1";
                 i = 0;
-            }
             else if (countWhiteFigure == 0)
-            {
-                Title = "поздравляем победитель игрок 2";
                 i = 1;
-            }
             else
             {
                 if (hod == 1 && countWhiteFigure == 1)
@@ -353,6 +385,8 @@ namespace WpfApp3
 
         private void NewGames()
         {
+            hod = 1;
+            this.Title = GamesLond.Title_1;
             NewGames_1();
             CreateMap();
         }
@@ -360,10 +394,8 @@ namespace WpfApp3
         private void NewGames_1()
         {
             simpleSteps = new figure[mapSize, mapSize];
-            hod = 1;
             countWhiteFigure = 12;//12
             countBlackFigure = 12;//12
-            this.Title = "Шашки ходит игрок 1";
         }
 
         private bool IsHod()
@@ -603,6 +635,7 @@ namespace WpfApp3
             try
             {
                 var file = new StreamWriter(Info.Path + Info.NameFile, false);
+                file.WriteLine(hod);
                 for (var i = 0; i < mapSize; i++)
                     for (var j = 0; j < mapSize; j++)
                         file.WriteLine(simpleSteps[i, j]);
@@ -620,7 +653,12 @@ namespace WpfApp3
                 if (file.Length == 0)
                     return;
                 NewGames_1();
-                for (int i = 0; i < file.Length; i++)
+                hod = Convert.ToInt32(file[0]);
+                if (hod == 1)
+                    this.Title = GamesLond.Title_1;
+                else
+                    this.Title = GamesLond.Title_2;
+                for (int i = 1; i < file.Length; i++)
                     if (!String.IsNullOrWhiteSpace(file[i]))
                     {
                         string[] stroka = file[i].Split(' ');
@@ -641,6 +679,18 @@ namespace WpfApp3
         }
 
         private void PM_1_3_Click(object sender, RoutedEventArgs e)
+        {
+            string s = "";
+            foreach (var el in Language)
+                if ((MenuItem)sender == el.Value)
+                    s = el.Key;
+            if (s.Length == 0)
+                return;
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(s);
+            Language_Changed(s);
+        }
+
+        private void PM_1_5_Click(object sender, RoutedEventArgs e)
         {
             var s = new Message(6);
             if (s.ShowDialog() != true)
