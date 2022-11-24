@@ -51,6 +51,12 @@ namespace WpfApp3
                 Width = 1065;
                 MinWidth = 1065;
             }
+            else if (i == 7)
+            {
+                pozdr.Text = MessageLeng.Text_7;
+                Width = 1065;
+                MinWidth = 1065;
+            }
         }
 
         private void Yes_Click(object sender, RoutedEventArgs e)

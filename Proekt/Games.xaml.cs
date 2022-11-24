@@ -17,8 +17,7 @@ namespace WpfApp3
         const int mapSize = 8;
         figure[,] simpleSteps = new figure[mapSize, mapSize];
         int hod = 1;
-        int countWhiteFigure = 12;//12
-        int countBlackFigure = 12;//12
+        countFigure CountFigure = new countFigure();
         bool povtor = false;
         figure b = null;
         List<figure> Meal = null; // пешки которых можно съеть (лист)
@@ -33,14 +32,19 @@ namespace WpfApp3
         {
             InitializeComponent();
             this.Title = GamesLond.Title_1;
+            SetDictionary();
+            if (Info.IsNullFile())
+                PM_1_5.IsEnabled = false;
+            CreateMap();
+        }
+
+        private void SetDictionary()
+        {
             Language.Add("en", PM_1_3_2);
             Language.Add("ru", PM_1_3_1);
             Language.Add("es", PM_1_3_3);
             Language.Add("fr", PM_1_3_4);
             Language_Changed(Thread.CurrentThread.CurrentUICulture.Parent.ToString());
-            if (Info.IsNullFile())
-                PM_1_5.IsEnabled = false;
-            CreateMap();
         }
 
         private void Language_Changed(string s)
@@ -65,7 +69,7 @@ namespace WpfApp3
         public Games(int x)
         {
             InitializeComponent();
-            Language_Changed(Thread.CurrentThread.CurrentUICulture.Parent.ToString());
+            SetDictionary();
             zagryzka();
         }
 
@@ -323,9 +327,9 @@ namespace WpfApp3
         private void izmenenie(figure m)
         {
             if (m.Index == 1)
-                countWhiteFigure--;
+                CountFigure.WhiteMoins();
             else
-                countBlackFigure--;
+                CountFigure.BlackMoins();
             m.Index = 0;
             m.Image();
             m.Dama = false;
@@ -344,18 +348,14 @@ namespace WpfApp3
             }
             povtor = false;
             int i = -1;
-            if (countBlackFigure == 0)
+            if (CountFigure.Black() == 0)
                 i = 0;
-            else if (countWhiteFigure == 0)
+            else if (CountFigure.White() == 0)
                 i = 1;
             else
             {
-                if (hod == 1 && countWhiteFigure == 1)
-                    if (IsHod())
-                        i = 1;
-                if (hod == 2 && countBlackFigure == 1)
-                    if (IsHod())
-                        i = 0;
+                if (!IsHod())
+                    i = (hod == 1) ? 1 : 0;
                 if (i == -1)
                 {
                     bool Dama = true;
@@ -386,16 +386,10 @@ namespace WpfApp3
         private void NewGames()
         {
             hod = 1;
-            this.Title = GamesLond.Title_1;
-            NewGames_1();
-            CreateMap();
-        }
-
-        private void NewGames_1()
-        {
+            Title = GamesLond.Title_1;
             simpleSteps = new figure[mapSize, mapSize];
-            countWhiteFigure = 12;//12
-            countBlackFigure = 12;//12
+            CountFigure = new countFigure();
+            CreateMap();
         }
 
         private bool IsHod()
@@ -404,10 +398,11 @@ namespace WpfApp3
                 if (figure.Index == hod)
                 {
                     Food_5(figure.Row, figure.Column, figure.Dama);
-                    if (lf is null)
+                    if (!(lf is null)) {
+                        otmena();
                         return true;
+                    }
                     otmena();
-                    break;
                 }
             return false;
         }
@@ -635,7 +630,7 @@ namespace WpfApp3
             try
             {
                 var file = new StreamWriter(Info.Path + Info.NameFile, false);
-                file.WriteLine(hod);
+                file.WriteLine($"{hod}{CountFigure}");
                 for (var i = 0; i < mapSize; i++)
                     for (var j = 0; j < mapSize; j++)
                         file.WriteLine(simpleSteps[i, j]);
@@ -647,34 +642,52 @@ namespace WpfApp3
 
         private void zagryzka()
         {
-            if (File.Exists(Info.Path + Info.NameFile))
+            try
             {
-                string[] file = File.ReadAllLines(Info.Path + Info.NameFile);
-                if (file.Length == 0)
-                    return;
-                NewGames_1();
-                hod = Convert.ToInt32(file[0]);
-                if (hod == 1)
-                    this.Title = GamesLond.Title_1;
-                else
-                    this.Title = GamesLond.Title_2;
-                for (int i = 1; i < file.Length; i++)
-                    if (!String.IsNullOrWhiteSpace(file[i]))
+                if (File.Exists(Info.Path + Info.NameFile))
+                {
+                    string[] file = File.ReadAllLines(Info.Path + Info.NameFile);
+                    if (file.Length == 0)
+                        return;
+                    simpleSteps = new figure[mapSize, mapSize];
+                    if (!String.IsNullOrWhiteSpace(file[0]))
                     {
-                        string[] stroka = file[i].Split(' ');
-                        var s1 = Convert.ToInt32(stroka[0]);
-                        var s2 = Convert.ToInt32(stroka[1]);
-                        var s3 = Convert.ToInt32(stroka[2]);
-                        var s4 = Convert.ToBoolean(stroka[3]);
-                        if (s1 < mapSize && s2 < mapSize)
-                        {
-                            simpleSteps[s1, s2] = new figure(s1, s2, s3, s4);
-                            grids.Children.Add(simpleSteps[s1, s2].button);
-                            Grid.SetColumn(simpleSteps[s1, s2].button, s1);
-                            Grid.SetRow(simpleSteps[s1, s2].button, s2);
-                            simpleSteps[s1, s2].button.Click += Button_Click;
-                        }
+                        string[] stroka = file[0].Split(' ');
+                        hod = Convert.ToInt32(stroka[0]);
+                        int w = Convert.ToInt32(stroka[1]);
+                        int b = Convert.ToInt32(stroka[2]);
+                        CountFigure = new countFigure(w,b);
                     }
+                    if (hod == 1)
+                        this.Title = GamesLond.Title_1;
+                    else
+                        this.Title = GamesLond.Title_2;
+                    for (int i = 1; i < file.Length; i++)
+                        if (!String.IsNullOrWhiteSpace(file[i]))
+                        {
+                            string[] stroka = file[i].Split(' ');
+                            var s1 = Convert.ToInt32(stroka[0]);
+                            var s2 = Convert.ToInt32(stroka[1]);
+                            var s3 = Convert.ToInt32(stroka[2]);
+                            var s4 = Convert.ToBoolean(stroka[3]);
+                            if (s1 < mapSize && s2 < mapSize)
+                            {
+                                simpleSteps[s1, s2] = new figure(s1, s2, s3, s4);
+                                grids.Children.Add(simpleSteps[s1, s2].button);
+                                Grid.SetColumn(simpleSteps[s1, s2].button, s1);
+                                Grid.SetRow(simpleSteps[s1, s2].button, s2);
+                                simpleSteps[s1, s2].button.Click += Button_Click;
+                            }
+                        }
+                }
+            }
+            catch (Exception)
+            {
+                var s = new Message(7);
+                if (s.ShowDialog() == true)
+                    NewGames();
+                else
+                    Close();
             }
         }
 

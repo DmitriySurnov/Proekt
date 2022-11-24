@@ -7,6 +7,42 @@ using System.Windows.Media.Imaging;
 
 namespace WpfApp3
 {
+    public class countFigure
+    {
+        private int white;
+        private int black;
+        
+        public countFigure(int White = 12,int Black = 12)
+        {
+            if (White <= 0 || White > 12)
+                White = 12;
+            if (Black <= 0 || Black > 12)
+                Black = 12;
+            white = White;
+            black = Black;
+        }
+        public int White()
+        {
+            return white;
+        }
+        public int Black()
+        {
+            return black;
+        }
+        public void WhiteMoins()
+        {
+            white--;
+        }
+        public void BlackMoins()
+        {
+            black--;
+        }
+        public override string ToString()
+        {
+            return $" {white} {black}";
+        }
+    }
+
     public static class Info
     {
         public static string Path = "";

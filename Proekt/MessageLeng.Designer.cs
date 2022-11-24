@@ -124,6 +124,15 @@ namespace WpfApp3 {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на При загрузке игры произошла ошибка..
+        /// </summary>
+        internal static string Text_7 {
+            get {
+                return ResourceManager.GetString("Text_7", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Хотите начать игру заново?.
         /// </summary>
         internal static string textBox {

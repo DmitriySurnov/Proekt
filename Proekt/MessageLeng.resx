@@ -147,4 +147,7 @@
   <data name="Yes" xml:space="preserve">
     <value>Да</value>
   </data>
+  <data name="Text_7" xml:space="preserve">
+    <value>При загрузке игры произошла ошибка.</value>
+  </data>
 </root>
